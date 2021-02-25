@@ -6,17 +6,15 @@ import { postsStartLoading } from '../actions/postsActions';
 import Panel from './ui/Panel';
 
 const HomeScreen = () => {
-	const { data, dispatch } = useContext(PostContext);
+	const { dispatch } = useContext(PostContext);
 
 	useEffect(() => {
 		postsStartLoading(dispatch);
 	}, [dispatch]);
 
-	// console.log(data);
-
 	return (
 		<div>
-			<Panel posts={data} />
+			<Panel />
 		</div>
 	);
 };
