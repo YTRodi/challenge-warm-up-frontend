@@ -8,7 +8,7 @@ export const postsStartLoading = async (dispatch) => {
 		const res = await fetchData('posts');
 		const body = await res.json();
 
-		!res.ok ? Swal.fire('Error', 'No se pudo traer los posts.', 'error') : dispatch(actionPostsLoaded(body));
+		!res.ok ? Swal.fire('Error', `Couldn't bring posts.`, 'error') : dispatch(actionPostsLoaded(body));
 	} catch (error) {
 		Swal.fire('Error', error, 'error');
 	}
@@ -28,7 +28,7 @@ export const postStartLoadingById = async (dispatch, postById) => {
 		console.log(body);
 
 		if (!res.ok) {
-			Swal.fire('Error', 'No se pudo traer el post por id.', 'error');
+			Swal.fire('Error', `Couldn't bring the post by id.`, 'error');
 			dispatch(actionClearActivePost());
 		} else {
 			dispatch(actionPostsLoadedById(body));
@@ -54,7 +54,7 @@ export const postStartAddNew = async (dispatch, data) => {
 		const body = await res.json();
 
 		if (!res.ok) {
-			Swal.fire('Error', 'No se pudo dar de alta el post.', 'error');
+			Swal.fire('Error', `The post couldn't be registered`, 'error');
 		} else {
 			dispatch(actionAddPost(body));
 			Swal.fire('Success', 'Alta éxitosa!', 'success');
@@ -67,4 +67,25 @@ export const postStartAddNew = async (dispatch, data) => {
 const actionAddPost = (newPost) => ({
 	type: types.postAddNew,
 	payload: newPost,
+});
+
+// Delete
+export const postStartDelete = async (dispatch, idPostToDelete) => {
+	try {
+		const res = await fetchData(`posts/${idPostToDelete}`, {}, 'DELETE');
+
+		if (!res.ok) {
+			Swal.fire('Error', `Couldn't delete post`, 'error');
+		} else {
+			dispatch(operationDelete(idPostToDelete));
+			Swal.fire('Deleted', 'Operation deleted successfully', 'success');
+		}
+	} catch (error) {
+		Swal.fire('Error', error, 'error');
+	}
+};
+
+const operationDelete = (idPostToDelete) => ({
+	type: types.postDeleted,
+	payload: idPostToDelete,
 });
