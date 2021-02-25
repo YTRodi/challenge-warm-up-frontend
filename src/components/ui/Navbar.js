@@ -5,6 +5,7 @@ import { PostContext } from '../../context/PostContext';
 
 import { useForm } from '../../hooks/useForm';
 import { postStartLoadingById } from '../../actions/postsActions';
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
 	const { dispatch } = useContext(PostContext);
@@ -13,12 +14,19 @@ const Navbar = () => {
 		postById: '',
 	});
 
-	const { postById } = formValues;
+	let { postById } = formValues;
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		postStartLoadingById(dispatch, parseInt(postById));
+		postById = parseInt(postById);
+
+		if (isNaN(postById)) {
+			reset();
+			return Swal.fire('Error', `Texts aren't accepted, only numbers.`, 'error');
+		}
+
+		postStartLoadingById(dispatch, postById);
 		reset();
 	};
 
