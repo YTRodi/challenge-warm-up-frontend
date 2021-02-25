@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { PostContext } from '../../context/PostContext';
+
+import { postStartDelete } from '../../actions/postsActions';
 
 const Card = ({ id, title }) => {
+	const { dispatch } = useContext(PostContext);
+
+	const handleDelete = () => {
+		postStartDelete(dispatch, id);
+	};
+
 	return (
 		<div>
 			<div className='card m-2 text-center' style={{ maxWidth: '27rem', width: '20rem', height: '16rem' }}>
@@ -22,14 +31,13 @@ const Card = ({ id, title }) => {
 						</div>
 
 						<div className='row'>
-							<div className='col-4'>
+							<div className='col'>
 								<button className='btn btn-primary'>Details</button>
 							</div>
-							<div className='col-4'>
-								<button className='btn btn-danger'>Delete</button>
-							</div>
-							<div className='col-4'>
-								<button className='btn btn-info'>Update</button>
+							<div className='col'>
+								<button className='btn btn-danger' onClick={handleDelete}>
+									Delete
+								</button>
 							</div>
 						</div>
 					</div>
