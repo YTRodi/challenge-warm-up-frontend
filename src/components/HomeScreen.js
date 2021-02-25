@@ -3,7 +3,6 @@ import React, { useContext, useEffect } from 'react';
 import { PostContext } from '../context/PostContext';
 import { postsStartLoading } from '../actions/postsActions';
 
-import Navbar from './ui/Navbar';
 import Panel from './ui/Panel';
 
 const HomeScreen = () => {
