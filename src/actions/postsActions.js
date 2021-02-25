@@ -39,6 +39,6 @@ const actionPostsLoadedById = (postById) => ({
 	payload: postById,
 });
 
-const actionClearActivePost = () => ({
+export const actionClearActivePost = () => ({
 	type: types.postClearActivePost,
 });
