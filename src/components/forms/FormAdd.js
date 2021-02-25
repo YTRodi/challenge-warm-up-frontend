@@ -34,48 +34,50 @@ const FormAdd = () => {
 
 	return (
 		<>
-			<form className='mt-3' onSubmit={handleSubmitAdd}>
-				<div className='form-group'>
-					<label htmlFor='inputUserId'>User Id</label>
-					<input
-						type='number'
-						className='form-control'
-						placeholder='User id of the post'
-						id='inputUserId'
-						value={userId}
-						name='userId'
-						onChange={handleInputChange}
-					/>
-				</div>
-				<div className='form-group'>
-					<label htmlFor='inputTitle'>Title</label>
-					<input
-						type='text'
-						className='form-control'
-						placeholder='Title of the post'
-						id='inputTitle'
-						value={title}
-						name='title'
-						onChange={handleInputChange}
-					/>
-				</div>
-				<div className='form-group'>
-					<label htmlFor='inputBody'>Body</label>
-					<textarea
-						type='text'
-						className='form-control'
-						placeholder='Body of the post'
-						id='inputBody'
-						value={body}
-						name='body'
-						onChange={handleInputChange}
-					/>
-				</div>
+			<div className='container'>
+				<form className='mt-3' onSubmit={handleSubmitAdd}>
+					<div className='form-group'>
+						<label htmlFor='inputUserId'>User Id</label>
+						<input
+							type='number'
+							className='form-control'
+							placeholder='User id of the post'
+							id='inputUserId'
+							value={userId}
+							name='userId'
+							onChange={handleInputChange}
+						/>
+					</div>
+					<div className='form-group'>
+						<label htmlFor='inputTitle'>Title</label>
+						<input
+							type='text'
+							className='form-control'
+							placeholder='Title of the post'
+							id='inputTitle'
+							value={title}
+							name='title'
+							onChange={handleInputChange}
+						/>
+					</div>
+					<div className='form-group'>
+						<label htmlFor='inputBody'>Body</label>
+						<textarea
+							type='text'
+							className='form-control'
+							placeholder='Body of the post'
+							id='inputBody'
+							value={body}
+							name='body'
+							onChange={handleInputChange}
+						/>
+					</div>
 
-				<button type='submit' className='btn btn-outline-success btn-block'>
-					Add
-				</button>
-			</form>
+					<button type='submit' className='btn btn-outline-success btn-block'>
+						Add
+					</button>
+				</form>
+			</div>
 		</>
 	);
 };

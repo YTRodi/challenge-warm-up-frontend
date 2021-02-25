@@ -19,7 +19,13 @@ const Panel = () => {
 			{activePost ? (
 				<Card key={activePost.id} id={activePost.id} title={activePost.title} />
 			) : (
-				data.map((post, index) => <Card key={index} id={post.id} title={post.title} />)
+				data
+					.map((post, index) => <Card key={index} id={post.id} title={post.title} />)
+					.sort((a, b) => {
+						const { id: idA } = a.props;
+						const { id: idB } = b.props;
+						return idB - idA;
+					})
 			)}
 		</div>
 	);
