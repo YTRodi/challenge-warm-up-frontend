@@ -8,7 +8,7 @@ import { postStartLoadingById } from '../../actions/postsActions';
 import Swal from 'sweetalert2';
 
 const Navbar = () => {
-	const { dispatch } = useContext(PostContext);
+	const { activePost, dispatch } = useContext(PostContext);
 
 	const [formValues, handleInputChange, reset] = useForm({
 		postById: '',
@@ -56,18 +56,29 @@ const Navbar = () => {
 					</ul>
 
 					<form className='form-inline my-2 my-lg-0' onSubmit={handleSubmit}>
-						<input
-							className='form-control mr-sm-2'
-							type='search'
-							placeholder='Search post by id'
-							autoComplete='off'
-							name='postById'
-							value={postById}
-							onChange={handleInputChange}
-						/>
-						<button className='btn btn-outline-success my-2 my-sm-0' type='submit'>
-							Search
-						</button>
+						{!activePost ? (
+							<>
+								<input
+									className='form-control mr-sm-2'
+									type='search'
+									placeholder='Search post by id'
+									autoComplete='off'
+									name='postById'
+									value={postById}
+									onChange={handleInputChange}
+								/>
+								<button className='btn btn-outline-success my-2 my-sm-0' type='submit'>
+									Search
+								</button>
+							</>
+						) : (
+							<div>
+								<input className='form-control mr-sm-2' type='search' placeholder='Search post by id' disabled />
+								<button className='btn btn-outline-success my-2 my-sm-0' type='submit' disabled>
+									Search
+								</button>
+							</div>
+						)}
 					</form>
 				</div>
 			</nav>
