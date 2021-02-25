@@ -5,17 +5,11 @@ import { actionClearActivePost } from '../../actions/postsActions';
 import FormAdd from '../forms/FormAdd';
 
 const AddNewPost = () => {
-	const { dispatch, data, activePost } = useContext(PostContext);
+	const { dispatch, data } = useContext(PostContext);
 
 	useEffect(() => {
 		dispatch(actionClearActivePost());
 	}, [dispatch, data]);
-
-	// Ponerlo en el submit del formulario
-	// TODO: lógica del alta éxitosa, falta el formulario de alta. (ambos campos son required)
-	// useEffect(() => {
-	// 	// postStartAddNew(dispatch, obj);
-	// }, []);
 
 	return (
 		<div
@@ -27,7 +21,6 @@ const AddNewPost = () => {
 				flexWrap: 'wrap',
 			}}
 		>
-			{/* {activePost && <Card key={activePost.id} id={activePost.id} title={activePost.title} />} */}
 			<FormAdd />
 		</div>
 	);
