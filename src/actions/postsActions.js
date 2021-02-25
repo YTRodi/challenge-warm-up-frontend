@@ -1,14 +1,15 @@
 import { types } from '../types/types';
 import { fetchData } from '../helpers/fetch';
+import Swal from 'sweetalert2';
 
 export const postsStartLoading = async (dispatch) => {
 	try {
 		const res = await fetchData('posts');
 		const body = await res.json();
 
-		!res.ok ? console.log('ERROR al traer los posts') : dispatch(actionPostsLoaded(body));
+		!res.ok ? Swal.fire('Error', 'No se pudo traer los posts.', 'error') : dispatch(actionPostsLoaded(body));
 	} catch (error) {
-		console.log(error);
+		Swal.fire('Error', error, 'error');
 	}
 };
 
@@ -17,11 +18,27 @@ const actionPostsLoaded = (posts) => ({
 	payload: posts,
 });
 
-// const addNewPost = (post) => ({
-const addNewPost = () => ({
-	type: types.postLoaded,
-	payload: {
-		title: 'este es un titulo de prueba!',
-		body: 'este es el cuerpo del post!',
-	},
+export const postStartLoadingById = async (dispatch, postById) => {
+	try {
+		const res = await fetchData(`posts/${postById}`);
+		const body = await res.json();
+
+		if (!res.ok) {
+			Swal.fire('Error', 'No se pudo traer el post por id.', 'error');
+			dispatch(actionClearActivePost());
+		} else {
+			dispatch(actionPostsLoadedById(body));
+		}
+	} catch (error) {
+		Swal.fire('Error', error, 'error');
+	}
+};
+
+const actionPostsLoadedById = (postById) => ({
+	type: types.postSetActive,
+	payload: postById,
+});
+
+const actionClearActivePost = () => ({
+	type: types.postClearActivePost,
 });

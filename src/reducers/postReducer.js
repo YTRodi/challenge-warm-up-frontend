@@ -13,6 +13,18 @@ export const postReducer = (state = initialState, action) => {
 				data: [...action.payload],
 			};
 
+		case types.postSetActive:
+			return {
+				...state,
+				activePost: action.payload,
+			};
+
+		case types.postClearActivePost:
+			return {
+				...state,
+				activePost: initialState.activePost,
+			};
+
 		case types.postAddNew:
 			return {
 				...state,
