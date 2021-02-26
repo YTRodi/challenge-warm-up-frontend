@@ -1,10 +1,19 @@
 import React, { useContext } from 'react';
 import { PostContext } from '../../context/PostContext';
 
-import { postStartDelete } from '../../actions/postsActions';
+import { postStartDelete, postStartLoadingById } from '../../actions/postsActions';
+import { uiOpenModal } from '../../actions/uiAction';
+
+import Details from './Details';
 
 const Card = ({ id, title }) => {
 	const { dispatch } = useContext(PostContext);
+
+	const handleOpenModalDetails = () => {
+		dispatch(uiOpenModal());
+
+		postStartLoadingById(dispatch, id);
+	};
 
 	const handleDelete = () => {
 		postStartDelete(dispatch, id);
@@ -32,7 +41,10 @@ const Card = ({ id, title }) => {
 
 						<div className='row'>
 							<div className='col'>
-								<button className='btn btn-primary'>Details</button>
+								<button className='btn btn-primary' onClick={handleOpenModalDetails}>
+									Details
+								</button>
+								<Details />
 							</div>
 							<div className='col'>
 								<button className='btn btn-danger' onClick={handleDelete}>

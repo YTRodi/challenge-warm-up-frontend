@@ -4,10 +4,25 @@ export const initialState = {
 	data: [],
 	activePost: null,
 	loading: false,
+	modalOpen: false,
 };
 
 export const postReducer = (state = initialState, action) => {
 	switch (action.type) {
+		// UI
+		case types.uiOpenModal:
+			return {
+				...state,
+				modalOpen: true,
+			};
+
+		case types.uiCloseModal:
+			return {
+				...state,
+				modalOpen: false,
+			};
+
+		// POSTS
 		case types.postSetLoading:
 			return {
 				...state,
@@ -48,6 +63,12 @@ export const postReducer = (state = initialState, action) => {
 			return {
 				...state,
 				data: state.data.filter((post) => post.id !== action.payload),
+			};
+
+		case types.postUpdated:
+			return {
+				...state,
+				data: state.data.map((post) => (post.id === action.payload.id ? action.payload : post)),
 			};
 
 		default:

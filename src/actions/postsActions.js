@@ -97,3 +97,9 @@ const operationDelete = (idPostToDelete) => ({
 	type: types.postDeleted,
 	payload: idPostToDelete,
 });
+
+// Update
+export const actionUpdate = (post) => ({
+	type: types.postUpdated,
+	payload: post,
+});

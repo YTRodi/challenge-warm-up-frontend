@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { PostContext } from '../../context/PostContext';
 
 import { actionClearActivePost } from '../../actions/postsActions';
-import FormAdd from '../forms/FormAdd';
+import Form from '../forms/Form';
 
 const AddNewPost = () => {
 	const { dispatch, data } = useContext(PostContext);
@@ -21,7 +21,7 @@ const AddNewPost = () => {
 				flexWrap: 'wrap',
 			}}
 		>
-			<FormAdd />
+			<Form />
 		</div>
 	);
 };
