@@ -4,7 +4,14 @@ import { PostContext } from '../../context/PostContext';
 
 import { isFormValid } from '../../helpers/validateFields';
 
-import { postStartAddNew, actionSetLoading, actionUpdate } from '../../actions/postsActions';
+import {
+	postStartAddNew,
+	actionSetLoading,
+	actionUpdate,
+	postStartDelete,
+	actionClearActivePost,
+} from '../../actions/postsActions';
+import { uiCloseModal } from '../../actions/uiAction';
 
 const initPost = {
 	userId: 0,
@@ -53,6 +60,12 @@ const Form = () => {
 		setFormValues(initPost);
 	};
 
+	const handleDelete = () => {
+		postStartDelete(dispatch, activePost.id);
+		dispatch(actionClearActivePost());
+		dispatch(uiCloseModal());
+	};
+
 	return (
 		<>
 			<div className='container'>
@@ -94,15 +107,23 @@ const Form = () => {
 						/>
 					</div>
 
-					<button type='submit' className='btn btn-outline-success btn-block' disabled={loading}>
+					<button className='btn btn-outline-success btn-block' disabled={loading}>
 						{loading ? (
 							<>
 								<span className='spinner-border spinner-border-sm' role='status'></span> Loading...
 							</>
+						) : !activePost ? (
+							'Add'
 						) : (
-							<>Add</>
+							'Update'
 						)}
 					</button>
+
+					{activePost && (
+						<button className='btn btn-outline-danger btn-block' disabled={loading} onClick={handleDelete}>
+							Delete
+						</button>
+					)}
 				</form>
 			</div>
 		</>
