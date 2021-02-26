@@ -7,6 +7,7 @@ import { useForm } from '../../hooks/useForm';
 import { postStartLoadingById } from '../../actions/postsActions';
 
 import Swal from 'sweetalert2';
+import { uiOpenModal } from '../../actions/uiAction';
 
 const Navbar = () => {
 	const { activePost, dispatch } = useContext(PostContext);
@@ -28,6 +29,8 @@ const Navbar = () => {
 		}
 
 		postStartLoadingById(dispatch, postById);
+		dispatch(uiOpenModal());
+
 		reset();
 	};
 
