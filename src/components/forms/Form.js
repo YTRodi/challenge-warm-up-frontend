@@ -69,6 +69,13 @@ const Form = () => {
 		<>
 			<div className='container'>
 				<form className='mt-3' onSubmit={handleSubmitForm}>
+					{activePost && (
+						<div className='form-group'>
+							<label htmlFor='inputUserId'>id</label>
+							<input type='text' className='form-control' value={activePost.id} disabled />
+						</div>
+					)}
+
 					<div className='form-group'>
 						<label htmlFor='inputUserId'>User Id</label>
 						<input
@@ -79,6 +86,7 @@ const Form = () => {
 							value={userId}
 							name='userId'
 							onChange={handleInputChange}
+							autoFocus
 						/>
 					</div>
 					<div className='form-group'>
@@ -103,6 +111,8 @@ const Form = () => {
 							value={body}
 							name='body'
 							onChange={handleInputChange}
+							rows='4'
+							style={{ resize: 'none' }}
 						/>
 					</div>
 

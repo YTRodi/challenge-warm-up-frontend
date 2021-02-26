@@ -35,8 +35,6 @@ export const postStartLoadingById = async (dispatch, postById) => {
 		const res = await fetchData(`posts/${postById}`);
 		const body = await res.json();
 
-		console.log(body);
-
 		if (!res.ok) {
 			Swal.fire('Error', `Couldn't bring the post by id.`, 'error');
 			dispatch(actionClearActivePost());
