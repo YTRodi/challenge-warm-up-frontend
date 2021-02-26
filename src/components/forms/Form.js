@@ -5,11 +5,11 @@ import { PostContext } from '../../context/PostContext';
 import { isFormValid } from '../../helpers/validateFields';
 
 import {
+	actionClearActivePost,
 	postStartAddNew,
 	actionSetLoading,
-	actionUpdate,
 	postStartDelete,
-	actionClearActivePost,
+	postStartUpdate,
 } from '../../actions/postsActions';
 import { uiCloseModal } from '../../actions/uiAction';
 
@@ -51,13 +51,12 @@ const Form = () => {
 			if (!activePost) {
 				dispatch(actionSetLoading());
 				postStartAddNew(dispatch, parsedValues);
+				setFormValues(initPost);
 			} else {
-				console.log('Actualizo el post con lo que tengo en formValues');
-				dispatch(actionUpdate({ userId, title, body }));
+				dispatch(actionSetLoading());
+				dispatch(postStartUpdate(dispatch, parsedValues));
 			}
 		}
-
-		setFormValues(initPost);
 	};
 
 	const handleDelete = () => {

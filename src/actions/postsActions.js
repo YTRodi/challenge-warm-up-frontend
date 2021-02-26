@@ -1,6 +1,7 @@
 import { types } from '../types/types';
 import { fetchData } from '../helpers/fetch';
 import Swal from 'sweetalert2';
+import { uiCloseModal } from './uiAction';
 
 // Loading data (SET)
 export const actionSetLoading = () => ({
@@ -19,7 +20,7 @@ export const postsStartLoading = async (dispatch) => {
 
 		!res.ok ? Swal.fire('Error', `Couldn't bring posts.`, 'error') : dispatch(actionPostsLoaded(body));
 	} catch (error) {
-		Swal.fire('Error', error, 'error');
+		Swal.fire('Error', error.toString(), 'error');
 	}
 };
 
@@ -41,7 +42,7 @@ export const postStartLoadingById = async (dispatch, postById) => {
 			dispatch(actionPostsLoadedById(body));
 		}
 	} catch (error) {
-		Swal.fire('Error', error, 'error');
+		Swal.fire('Error', error.toString(), 'error');
 	}
 };
 
@@ -68,7 +69,7 @@ export const postStartAddNew = async (dispatch, data) => {
 			Swal.fire('Success', 'Alta éxitosa!', 'success');
 		}
 	} catch (error) {
-		Swal.fire('Error', error, 'error');
+		Swal.fire('Error', error.toString(), 'error');
 	}
 };
 
@@ -85,21 +86,38 @@ export const postStartDelete = async (dispatch, idPostToDelete) => {
 		if (!res.ok) {
 			Swal.fire('Error', `Couldn't delete post`, 'error');
 		} else {
-			dispatch(operationDelete(idPostToDelete));
+			dispatch(actionPostDelete(idPostToDelete));
 			Swal.fire('Deleted', 'Operation deleted successfully', 'success');
 		}
 	} catch (error) {
-		Swal.fire('Error', error, 'error');
+		Swal.fire('Error', error.toString(), 'error');
 	}
 };
 
-const operationDelete = (idPostToDelete) => ({
+const actionPostDelete = (idPostToDelete) => ({
 	type: types.postDeleted,
 	payload: idPostToDelete,
 });
 
 // Update
-export const actionUpdate = (post) => ({
+export const postStartUpdate = async (dispatch, postToUpdate) => {
+	try {
+		const res = await fetchData(`posts/${postToUpdate.id}`, postToUpdate, 'PUT');
+
+		if (!res.ok) {
+			Swal.fire('Error', `Couldn't update post`, 'error');
+		} else {
+			dispatch(actionPostUpdate(postToUpdate));
+			dispatch(actionClearLoading());
+			dispatch(uiCloseModal());
+			Swal.fire('Updated', 'Operation updated successfully', 'success');
+		}
+	} catch (error) {
+		Swal.fire('Error', error.toString(), 'error');
+	}
+};
+
+const actionPostUpdate = (post) => ({
 	type: types.postUpdated,
 	payload: post,
 });
