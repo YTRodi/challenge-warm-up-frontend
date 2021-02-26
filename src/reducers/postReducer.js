@@ -3,10 +3,23 @@ import { types } from '../types/types';
 export const initialState = {
 	data: [],
 	activePost: null,
+	loading: false,
 };
 
 export const postReducer = (state = initialState, action) => {
 	switch (action.type) {
+		case types.postSetLoading:
+			return {
+				...state,
+				loading: true,
+			};
+
+		case types.postClearLoading:
+			return {
+				...state,
+				loading: false,
+			};
+
 		case types.postLoaded:
 			return {
 				...state,

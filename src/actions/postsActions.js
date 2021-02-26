@@ -2,6 +2,15 @@ import { types } from '../types/types';
 import { fetchData } from '../helpers/fetch';
 import Swal from 'sweetalert2';
 
+// Loading data (SET)
+export const actionSetLoading = () => ({
+	type: types.postSetLoading,
+});
+
+export const actionClearLoading = () => ({
+	type: types.postClearLoading,
+});
+
 // Get all
 export const postsStartLoading = async (dispatch) => {
 	try {
@@ -24,8 +33,6 @@ export const postStartLoadingById = async (dispatch, postById) => {
 	try {
 		const res = await fetchData(`posts/${postById}`);
 		const body = await res.json();
-
-		console.log(body);
 
 		if (!res.ok) {
 			Swal.fire('Error', `Couldn't bring the post by id.`, 'error');
@@ -57,6 +64,7 @@ export const postStartAddNew = async (dispatch, data) => {
 			Swal.fire('Error', `The post couldn't be registered`, 'error');
 		} else {
 			dispatch(actionAddPost(body));
+			dispatch(actionClearLoading());
 			Swal.fire('Success', 'Alta éxitosa!', 'success');
 		}
 	} catch (error) {

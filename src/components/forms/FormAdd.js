@@ -5,10 +5,10 @@ import { PostContext } from '../../context/PostContext';
 import { isFormValid } from '../../helpers/validateFields';
 import { useForm } from '../../hooks/useForm';
 
-import { postStartAddNew } from '../../actions/postsActions';
+import { postStartAddNew, actionSetLoading } from '../../actions/postsActions';
 
 const FormAdd = () => {
-	const { dispatch } = useContext(PostContext);
+	const { dispatch, loading } = useContext(PostContext);
 
 	const [formValues, handleInputChange, reset] = useForm({
 		userId: 10,
@@ -26,6 +26,7 @@ const FormAdd = () => {
 
 		// Validación de campos..
 		if (isFormValid(formValues)) {
+			dispatch(actionSetLoading());
 			postStartAddNew(dispatch, { userId, title, body });
 		}
 
@@ -73,8 +74,14 @@ const FormAdd = () => {
 						/>
 					</div>
 
-					<button type='submit' className='btn btn-outline-success btn-block'>
-						Add
+					<button type='submit' class='btn btn-outline-success btn-block' disabled={loading}>
+						{loading ? (
+							<>
+								<span class='spinner-border spinner-border-sm' role='status'></span> Loading...
+							</>
+						) : (
+							<>Add</>
+						)}
 					</button>
 				</form>
 			</div>
