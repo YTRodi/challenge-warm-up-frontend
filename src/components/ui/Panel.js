@@ -4,7 +4,7 @@ import { PostContext } from '../../context/PostContext';
 import Card from './Card';
 
 const Panel = () => {
-	const { activePost, data } = useContext(PostContext);
+	const { data } = useContext(PostContext);
 
 	return (
 		<div
@@ -16,7 +16,7 @@ const Panel = () => {
 				flexWrap: 'wrap',
 			}}
 		>
-			{activePost ? (
+			{/* {activePost ? (
 				<Card key={activePost.id} id={activePost.id} title={activePost.title} />
 			) : (
 				data
@@ -26,7 +26,14 @@ const Panel = () => {
 						const { id: idB } = b.props;
 						return idB - idA;
 					})
-			)}
+			)} */}
+			{data
+				.map((post, index) => <Card key={index} id={post.id} title={post.title} />)
+				.sort((a, b) => {
+					const { id: idA } = a.props;
+					const { id: idB } = b.props;
+					return idB - idA;
+				})}
 		</div>
 	);
 };

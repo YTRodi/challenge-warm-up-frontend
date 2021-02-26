@@ -21,7 +21,7 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 const Details = () => {
-	const { modalOpen, dispatch } = useContext(PostContext);
+	const { modalOpen, dispatch, activePost } = useContext(PostContext);
 
 	const closeModal = () => {
 		dispatch(uiCloseModal());
@@ -29,16 +29,18 @@ const Details = () => {
 	};
 
 	return (
-		<Modal
-			isOpen={modalOpen}
-			onRequestClose={closeModal}
-			style={customStyles}
-			closeTimeoutMS={200}
-			className='modal'
-			overlayClassName='modal-fondo'
-		>
-			<Form />
-		</Modal>
+		activePost && (
+			<Modal
+				isOpen={modalOpen}
+				onRequestClose={closeModal}
+				style={customStyles}
+				closeTimeoutMS={200}
+				className='modal'
+				overlayClassName='modal-fondo'
+			>
+				<Form />
+			</Modal>
+		)
 	);
 };
 
